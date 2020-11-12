@@ -15,7 +15,7 @@ Use enhanced methods of feature engineering and construct deep machine learning 
             "fight_predict_ensemble_model_numerical_output_masked_mae_accuracy": 1.228183388710022
         }
 
-* One example plots during training, ***train(Red)/verification(Green)***:
+* One example plots value over epoch during training, ***train(Red)/verification(Green)***:
     <table>
     <tr>
     <td>7 outputs accuracy</td>
@@ -281,17 +281,20 @@ If one simply made the MLP(multilayer perceptron) a classification model and fee
     * [Build Fight Data](Code/Feature_Engineering/BuildFightData_DCD_Include_NC.py): Build features and labels of fight data from reformated data for training and testing model, or build features for model to predict. Most important one type of features is **weighted relative accuracy**:
 
         ```python
-        # e.g calculate fighter_0's weighted relative striking accuracy(wrsa) & fighter_1's weighted relative defending accuracy(wrda), in order to approximate true ability of fighter_0's striking and fighter_0's defending, vice versa
+        # e.g calculate fighter_0's weighted relative striking accuracy(wrsa) & fighter_1's weighted relative defending accuracy(wrda), 
+        # in order to approximate true ability of fighter_0's striking and fighter_0's defending, vice versa
         now_target_wrsa = striks_land_num / total_striks_num
         now_expect_wrsa = (last_wrsa + (1 - last_wrda)) / 2
         max_update_value = now_target_wrsa - now_expect_wrsa
 
-        # fighter_0's wrsa change percentage is determining by ratio of fighter_0's striking number per minute in current fight to sum of fighter_0's striking number per minute in fighter_0's all fight
+        # fighter_0's wrsa change percentage is determining by ratio between fighter_0's striking number per minute,
+        # and current fight to sum of fighter_0's striking number per minute in fighter_0's all fight
         sum_all_striking_num_per_minute = last_all_striking_num_per_minute + now_striking_num_per_minute
         change_percent_wrsa = now_striking_num_per_minute / sum_all_striking_num_per_minute
         new_wrsa = (last_wrsa + max_update_value) * change_percent_wrsa + (1 - change_percent_wrsa) * last_wrsa
 
-        # fighter_1's wrda change percentage is determining by ratio of fighter_0's striking number per minute in current fight to sum of fighter_1's opponents striking number per minute in fighter_1's all last fight
+        # fighter_1's wrda change percentage is determining by ratio between fighter_0's striking number per minute,
+        # and current fight to sum of fighter_1's opponents striking number per minute in fighter_1's all last fight
         sum_all_defending_num_per_minute = last_all_defending_num_per_minute + now_defending_num_per_minute
         change_percent_wrda = now_defending_num_per_minute / sum_all_defending_num_per_minute    
         new_wrda = (last_wrda + max_update_value) * change_percent_wrda + (1 - change_percent_wrda) * last_wrda
