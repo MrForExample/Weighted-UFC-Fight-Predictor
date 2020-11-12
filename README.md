@@ -349,7 +349,7 @@ If one simply made the MLP(multilayer perceptron) a classification model and fee
             ![One example model structure](saved_models/fight_predict_model-20201112-082915/FPM_M_model_structure.png)
         * One example ensemble model structure:
 
-            ![One example ensemble model structure](saved_models\FPM_E_model_structure.png)
+            ![One example ensemble model structure](saved_models/FPM_E_model_structure.png)
         
     * **Prdiction Metrics**:
         * **Metrics for Distribution Output**: One may try make a model to predict overall_accuracy directly, i.e three outputs instead of seven outputs, may result in higher overall_accuracy if that's the main goal
